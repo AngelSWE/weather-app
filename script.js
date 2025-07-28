@@ -2,7 +2,7 @@ async function fetchWeather() {
     let searchInput = document.getElementById("search-bar").value;
     const weatherDataSection = document.getElementById("weather-data");
     weatherDataSection.style.display = "block";
-    const apiKey = "40be63b4e836afca7f1d21a3fdae8b8c";
+    const apiKey = "";
  
  
     if (searchInput === "") {
@@ -98,7 +98,7 @@ async function fetchWeather() {
 
 
 
-    
+
  
     document.getElementById("search-bar").value = "";
     const geocodeData = await getLonAndLat();
