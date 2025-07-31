@@ -1,37 +1,34 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-   <meta charset="UTF-8">
-   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-   <link rel="stylesheet" href="style.css">
-   <title>Weather App</title>
-</head>
-<body>
-   <section id="weather-container">
-       <h1>Weather</h1>
-       <div id="search-container">
-           <input type="search" name="city" id="search-bar" placeholder="Search by City">
-           <input type="submit" value="search" id="submit-button" onclick="fetchWeather()">
-       </div>
-       <div id="weather-data" style="display: none;"></div>
-   </section>
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="style.css">
+        <title>Weather App</title>
+    </head>
 
+    <body>
 
-   <section id="humidity-container">
-       <h1>Humidity</h1>
-       <div id="humidity-data"></div>
-       <!-- <div id="humidity-description"></div> -->
-   </section>
+        <section id="weather-container" class="glass-container">
+            <h1>Weather</h1>
+            <div id="search-container">
+                <input type="search" name="city" id="search-bar" placeholder="Search by City">
+                <input type="submit" value="search" id="submit-button" onclick="fetchWeather()">
+            </div>
+            <div id="weather-data" style="display: none;"></div>
+        </section>
 
+        <section id="humidity-container" class="glass-container">
+           <h1>Humidity</h1>
+           <div id="humidity-data"></div>
+        </section>
 
-   <section id="five-day-forecast">
-       <h1>5 day forecast</h1>
-       <div id="forecast-data"></div>
-   </section>
-
-
-  
-</body>
-<script src="script.js"></script>
+        <section id="five-day-forecast" class="glass-container">
+           <h1>5 day forecast</h1>
+           <div id="forecast-data"></div>
+        </section>
+        
+    </body>
+    <script src="script.js"></script>
 </html>

@@ -4,7 +4,7 @@ async function fetchWeather() {
     weatherDataSection.style.display = "block";
     const apiKey = "";
  
- 
+    // fail case for empty or wrong search
     if (searchInput === "") {
         weatherDataSection.innerHTML = `
         <div>
@@ -37,10 +37,6 @@ async function fetchWeather() {
         } else {
             return data[0];
         }
- 
- 
- 
- 
     }
  
  
@@ -76,7 +72,6 @@ async function fetchWeather() {
  
     async function fetchHumidity(lon,lat) {
         let humidityDataSection = document.getElementById("humidity-data");
-        // const humidityDescription = document.getElementById("humidity-description");
         const humidityURL = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apiKey}`;
         const response = await fetch(humidityURL);
         if (!response.ok) {
@@ -92,24 +87,51 @@ async function fetchWeather() {
         </div>
         `;
     }
+
+
+    async function fetchForecast(lon,lat) {
+        let forecastData = document.getElementById("forecast-data");
+        const forecastURL = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${apiKey}&units=imperial`;
+        const response = await fetch(forecastURL);
+        if (!response.ok) {
+            console.log("Bad response!", response.status);
+            return;
+        }
+        const data = await response.json();
+
+        // Filter forecasts for 12:00:00 each day
+        const dailyForecasts = data.list.filter(item => item.dt_txt.includes("12:00:00"));
+
+        // Limit to 5 days
+        const forecastHTML = dailyForecasts.slice(0, 5).map(item => {
+        const date = new Date(item.dt * 1000).toLocaleDateString();
+        const temp = item.main.temp;
+        const description = item.weather[0].description;
+        const icon = item.weather[0].icon;
+        return `
+            <div style="text-align: center; padding: 10px;">
+                <p><strong>${date}</strong></p>
+                <img src="https://openweathermap.org/img/wn/${icon}@2x.png" alt="${description}">
+                <p>${temp}°F</p>
+                <p>${description}</p>
+            </div>
+        `;
+        }).join("");
+
+        forecastData.innerHTML = 
+            `<div class="forecast-row">
+                ${forecastHTML}
+            </div>`;
+    }
  
- 
 
-
-
-
-
- 
     document.getElementById("search-bar").value = "";
     const geocodeData = await getLonAndLat();
         if (geocodeData) {
             await getWeatherData(geocodeData.lon, geocodeData.lat);
             await fetchHumidity(geocodeData.lon, geocodeData.lat);
+            await fetchForecast(geocodeData.lon, geocodeData.lat);
         }
     getWeatherData(geocodeData.lon, geocodeData.lat);
- 
- 
- 
- 
- }
- 
+
+}
